@@ -5,6 +5,8 @@ Ecomverse is a simple online store for a friend ("the client"). He sells ~20 pro
 
 Goals: look secure and professional, work reliably, cost nothing to run, stay simple.
 
+Related docs: `AGENTS.md` (rules for the agent), `docs/AGENT_PROMPTS.md` (task order), `docs/POLICIES_DRAFT.md` (policy text), `docs/OWNER_CHECKLIST.md` (manual steps), `docs/PROGRESS.md` (running log).
+
 ## 2. Client constraints
 - As simple and manual as possible: no supplier APIs, no CSV import.
 - Everything free (hosting, database, auth). No phone OTP, no paid email service.
@@ -18,7 +20,7 @@ Goals: look secure and professional, work reliably, cost nothing to run, stay si
 3. Checkout requires Google sign-in. If the delivery address is incomplete, the customer fills it in on the Account page (name, phone, address, city, state, pincode).
 4. Customer reviews the order summary (items, shipping, total) and pays with Razorpay.
 5. After successful payment, the page shows the order number on screen. No email is sent.
-6. "My orders" shows each order's status and tracking number as the client updates them.
+6. "My orders" lists the customer's **paid** orders (pending or failed payments are hidden) with status and tracking number as the client updates them.
 
 ## 4. Admin flow (email + password)
 - **Orders:** list of paid orders (default). Filter by status. For each order show customer name, phone, full address, items (with variant and quantity), supplier link for each item, total. Change status (`new` > `ordered_from_supplier` > `shipped` > `delivered`, or `cancelled`) and type the tracking number.
