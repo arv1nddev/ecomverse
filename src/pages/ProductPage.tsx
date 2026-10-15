@@ -14,7 +14,7 @@
  *  - Never queries product_supplier_info (Hard Rule 4).
  *  - Inactive product (RLS returns no row) → treats as 404.
  *  - Variant required when variant_options is non-empty; button stays disabled until one is chosen.
- *  - addToCart is called on the CartContext stub (real logic in Task 4).
+ *  - addToCart uses the new CartContext API (product_id, quantity, variant only).
  */
 
 import { useEffect, useReducer } from 'react'
@@ -140,16 +140,11 @@ export function ProductPage() {
     const hasVariants = product.variant_options.length > 0
     if (hasVariants && !selectedVariant) return // guard: button is also disabled
 
-    const mainImage = product.product_images.find((img) => img.sort_order === 0) ?? product.product_images[0]
 
     addToCart({
-      productId: product.id,
-      productName: product.name,
-      slug: product.slug,
-      price: Number(product.price),
-      variant: hasVariants ? selectedVariant : null,
-      imagePath: mainImage ? mainImage.storage_path : null,
+      product_id: product.id,
       quantity,
+      variant: hasVariants ? selectedVariant : null,
     })
 
     const msg = `${product.name}${selectedVariant ? ` (${selectedVariant})` : ''} added to cart!`

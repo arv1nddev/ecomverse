@@ -87,3 +87,19 @@ button {
     border-color 0.15s ease,
     opacity 0.15s ease;
 }
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+
+/* Hide scrollbar while keeping scroll functionality */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Lazy-load images by default; eager on LCP images via loading="eager" */
+img {
+  loading: lazy;
+}

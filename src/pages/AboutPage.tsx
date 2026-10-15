@@ -1,13 +1,29 @@
+import { PolicyLayout, PolicySection, OwnerConfirm, MailtoLink } from '../components/layout/PolicyLayout'
+
 export function AboutPage() {
   return (
     <>
-      <title>About – Ecomverse</title>
-      <meta name="description" content="Learn about Ecomverse." />
-      <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-bold text-neutral-900">About Ecomverse</h1>
-        <p className="mt-4 text-neutral-600">About page content coming soon.</p>
-        <p className="mt-8 text-sm text-neutral-400 italic">[About page — placeholder]</p>
-      </section>
+      <title>About us – Ecomverse</title>
+      <meta
+        name="description"
+        content="Learn about Ecomverse – hand-picked everyday products delivered across India."
+      />
+      <PolicyLayout title="About us">
+        <PolicySection>
+          <p>
+            Ecomverse brings a hand-picked range of everyday products to your door across
+            India.{' '}
+            <OwnerConfirm text="one or two sentences about the brand and what it sells." />
+          </p>
+        </PolicySection>
+
+        <PolicySection heading="Get in touch">
+          <p>
+            Questions? Email us at <MailtoLink email="ecomversee@gmail.com" /> and we'll
+            be happy to help.
+          </p>
+        </PolicySection>
+      </PolicyLayout>
     </>
   )
 }

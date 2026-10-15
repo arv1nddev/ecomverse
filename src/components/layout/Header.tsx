@@ -9,18 +9,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { useCart } from '../../context/CartContext'
 
-// Cart item count – reads localStorage directly; will be replaced by CartContext in Task 3.
-function useCartCount(): number {
-  try {
-    const raw = localStorage.getItem('ecomverse_cart')
-    if (!raw) return 0
-    const items = JSON.parse(raw) as Array<{ qty?: number; quantity?: number }>
-    return items.reduce((sum, i) => sum + Number(i.qty ?? i.quantity ?? 0), 0)
-  } catch {
-    return 0
-  }
-}
 
 /** Return the first letter of the first word in a name or email. */
 function initials(displayName: string | null | undefined, email: string | null | undefined): string {
@@ -30,13 +20,13 @@ function initials(displayName: string | null | undefined, email: string | null |
 
 export function Header() {
   const { user, profile, session, signOut } = useAuth()
+  const { itemCount } = useCart()
   const isLoggedIn = !!session
   const displayName = profile?.full_name ?? user?.user_metadata?.full_name ?? user?.email ?? null
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const userMenuRef = useRef<HTMLDivElement>(null)
-  const cartCount = useCartCount()
   const navigate = useNavigate()
 
   // Close user dropdown when clicking outside
@@ -122,7 +112,7 @@ export function Header() {
           <Link
             to="/cart"
             className="relative p-2 text-neutral-600 hover:text-neutral-900 transition-colors"
-            aria-label={`Cart${cartCount > 0 ? `, ${cartCount} item${cartCount === 1 ? '' : 's'}` : ''}`}
+            aria-label={`Cart${itemCount > 0 ? `, ${itemCount} item${itemCount === 1 ? '' : 's'}` : ''}`}
             id="cart-icon-link"
           >
             <svg
@@ -140,9 +130,9 @@ export function Header() {
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.4 7h12.8M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
               />
             </svg>
-            {cartCount > 0 && (
+            {itemCount > 0 && (
               <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand-500 text-[10px] font-bold text-white">
-                {cartCount > 9 ? '9+' : cartCount}
+                {itemCount > 9 ? '9+' : itemCount}
               </span>
             )}
           </Link>
@@ -231,7 +221,7 @@ export function Header() {
           <Link
             to="/cart"
             className="relative p-2 text-neutral-600 hover:text-neutral-900"
-            aria-label={`Cart${cartCount > 0 ? `, ${cartCount} items` : ''}`}
+            aria-label={`Cart${itemCount > 0 ? `, ${itemCount} items` : ''}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -248,9 +238,9 @@ export function Header() {
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.4 7h12.8M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
               />
             </svg>
-            {cartCount > 0 && (
+            {itemCount > 0 && (
               <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand-500 text-[10px] font-bold text-white">
-                {cartCount > 9 ? '9+' : cartCount}
+                {itemCount > 9 ? '9+' : itemCount}
               </span>
             )}
           </Link>
